@@ -1,7 +1,7 @@
 package string;
 
 /**
- * Replace all the instances of a char in a string to a string
+ * Replace all the instances of a char/substring in a string with another string
  */
 public class ReplaceChar
 {

@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 public class AllSubsets
 {
+	/**
+	 * Generate all subsets of a set (chars in a String)
+	 * Uses a bit bucket to represent what char to keep
+	 * e.g., for "abc", 101 means ac
+	 * Then, generate all the numbers from 0 to 2^n-1
+	 * Each number represents a subset
+	 */
 	public static ArrayList<String> getAllSubsets(String set)
 	{
 		ArrayList<String> result = new ArrayList<String>();
@@ -19,7 +26,7 @@ public class AllSubsets
 		{
 			// for each i, check the bits and generate an output
 			String output = new String();
-			for(int j=0; j<n; ++j)
+			for(int j = 0; j < n; ++j)
 				if(i.testBit(j))
 					output += set.charAt(j);
 			result.add(output);
@@ -28,6 +35,9 @@ public class AllSubsets
 		return result;
 	}
 	
+	/**
+	 * Another way is to use recursion
+	 */
 	public static ArrayList<String> getAllSubsets2(String set)
 	{
 		ArrayList<String> result = new ArrayList<String>();
@@ -53,6 +63,6 @@ public class AllSubsets
 	
 	public static void main(String[] argvs)
 	{
-		System.out.println(getAllSubsets2("ABC"));
+		System.out.println(getAllSubsets("ABC"));
 	}
 }
