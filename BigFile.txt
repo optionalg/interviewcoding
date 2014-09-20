@@ -1,0 +1,37 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+
+
+public class RandomLineFromFile
+{
+	public static String pick(String fileName) throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		int lineNumber = 0;
+		String buffer = new String();
+		Random rand = new Random();
+		String line = reader.readLine();
+		while (!line.isEmpty())
+		{
+			lineNumber++;
+			if (rand.nextInt(lineNumber) == 0)
+				buffer = line;
+			line = reader.readLine();
+		}
+		reader.close();
+		return buffer;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			System.out.println(pick("BigFile.txt"));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
