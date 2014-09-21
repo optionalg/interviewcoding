@@ -16,6 +16,12 @@ public class Bits
 		return (n & mask) | (m << i);		
 	}
 	
+	/**
+	 * Division without using division operator
+	 * @param numerator
+	 * @param denominator
+	 * @return
+	 */
 	public static int divide(int numerator, int denominator)
 	{
 		int current  = 1;   // current bit
@@ -30,7 +36,7 @@ public class Bits
 	    // align numerator and denominator
 	    while(denominator <= numerator)
 	    {
-	    		denominator <<= 1;
+	    	denominator <<= 1;
 	        current     <<= 1;
 	    }
 	    denominator >>= 1;
@@ -40,7 +46,7 @@ public class Bits
 	    {
 	        if(numerator >= denominator)
 	        {
-	        		numerator -= denominator;
+	        	numerator -= denominator;
 	            quotient |= current;
 	        }
 	        current     >>= 1;
@@ -52,10 +58,10 @@ public class Bits
 	public static void main(String[] argv)
 	{
 		int i = -1;
-//		System.out.println(Integer.toBinaryString(i));
-//		System.out.println(Integer.toBinaryString(i >>> 5));
-//		System.out.println(Integer.toBinaryString(i >> 5));
+		System.out.println(Integer.toBinaryString(i));
+		System.out.println(Integer.toBinaryString(i >>> 5));
+		System.out.println(Integer.toBinaryString(i >> 5));
 		System.out.println(divide(15, 3));
-//		System.out.println(setBits(0x400, 0x15, 2, 4));
+		System.out.println(setBits(0x400, 0x15, 2, 4));
 	}
 }

@@ -1,4 +1,6 @@
+package tree;
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 class TreeNode<T>
@@ -47,7 +49,8 @@ class TreeNode<T>
 		return value.toString();
 	}
 	
-	public enum Order{PRE_ORDER, IN_ORDER, POST_ORDER};
+	public enum Order{PRE_ORDER, IN_ORDER, POST_ORDER, 
+					  PRE_ORDER_ITERATIVE, IN_ORDER_ITERATIVE, POST_ORDER_ITERATIVE};
 	
 	public String dfs(Order order)
 	{
@@ -62,6 +65,15 @@ class TreeNode<T>
 			break;
 		case POST_ORDER:
 			postOrder(this, builder);
+			break;
+		case PRE_ORDER_ITERATIVE:
+			preOrderIterative(this, builder);
+			break;
+		case IN_ORDER_ITERATIVE:
+			inOrderIterative(this, builder);
+			break;
+		case POST_ORDER_ITERATIVE:
+			postOrderIterative(this, builder);
 			break;
 		default:
 			break;
@@ -97,6 +109,105 @@ class TreeNode<T>
 			postOrder(root.getRight(), builder);
 			builder.append(root.getValue());
 		}
+	}
+	
+	private void preOrderIterative(TreeNode<T> root, StringBuilder builder)
+	{
+		if(root == null)
+			return;
+		
+		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+		stack.push(root);
+		while(!stack.isEmpty())
+		{
+			TreeNode<T> node = stack.pop();
+			builder.append(node.getValue());
+			if(node.getRight() != null)
+				stack.push(node.getRight());
+			if(node.getLeft() != null)
+				stack.push(node.getLeft());
+		}
+	}
+	
+	private void inOrderIterative(TreeNode<T> root, StringBuilder builder)
+	{
+		if(root == null)
+			return;
+		
+		TreeNode<T> node = root;
+		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+		while(!stack.isEmpty() || node != null)
+		{
+			while(node != null)
+			{
+				stack.push(node);
+				node = node.getLeft();
+			}
+			
+			node = stack.pop();
+			builder.append(node);
+			
+			node = node.getRight();
+		}
+	}
+	
+	private void postOrderIterative(TreeNode<T> root, StringBuilder builder)
+	{
+		if(root == null)
+			return;
+		
+		Stack<TreeNodeAdapter<T>> stack = new Stack<TreeNodeAdapter<T>>();
+		stack.push(new TreeNodeAdapter<T>(root, 0));
+		while(!stack.isEmpty())
+		{
+			TreeNodeAdapter<T> node = stack.pop();
+			switch(node.getCount())
+			{
+			case 0:
+				node.setCount(node.getCount() + 1);
+				stack.push(node);
+				TreeNode<T> left = node.getNode().getLeft(); 
+				if(left != null)
+					stack.push(new TreeNodeAdapter<T>(left, 0));
+				break;
+			case 1:
+				node.setCount(node.getCount() + 1);
+				stack.push(node);
+				TreeNode<T> right = node.getNode().getRight(); 
+				if(right != null)
+					stack.push(new TreeNodeAdapter<T>(right, 0));
+				break;
+			case 2:
+				builder.append(node.getNode());
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
+class TreeNodeAdapter<T>
+{
+	TreeNode<T> node;
+	int         count;
+	
+	public TreeNodeAdapter(TreeNode<T> node, int count)
+	{
+		this.node  = node;
+		this.count = count;
+	}
+	
+	public TreeNode<T> getNode() {
+		return node;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public void setCount(int count) {
+		this.count = count;
 	}
 }
 
@@ -148,7 +259,7 @@ public class BinaryTreePaths
 	
 	/**
 	 * Build a binary tree from its pre-order and in-order
-	 * e.g., pre: ABCDEF, in: CBDAFE
+	 * e.g., pre: DBACFE, in: ABCDEF
 	 * result:
 	 *        D
 	 *      /   \
@@ -200,11 +311,14 @@ public class BinaryTreePaths
 	
 	public static void main(String[] args)
 	{
-		CharTreeNode root = buildTree("ABCDEF", "CBDAFE");
-		System.out.println(root.dfs(TreeNode.Order.PRE_ORDER));
-		System.out.println(root.dfs(TreeNode.Order.IN_ORDER));
-		System.out.println(root.dfs(TreeNode.Order.POST_ORDER));
-		System.out.println(printPaths(root));
+		CharTreeNode root = buildTree("DBACFE", "ABCDEF");
+//		System.out.println(root.dfs(TreeNode.Order.PRE_ORDER));
+//		System.out.println(root.dfs(TreeNode.Order.IN_ORDER));
+//		System.out.println(root.dfs(TreeNode.Order.POST_ORDER));
+		System.out.println(root.dfs(TreeNode.Order.PRE_ORDER_ITERATIVE));
+		System.out.println(root.dfs(TreeNode.Order.IN_ORDER_ITERATIVE));
+		System.out.println(root.dfs(TreeNode.Order.POST_ORDER_ITERATIVE));
+//		System.out.println(printPaths(root));
 	}
 
 }

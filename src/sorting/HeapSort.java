@@ -1,7 +1,5 @@
-import java.util.Arrays;
-import java.util.Comparator;
+package sorting;
 import java.util.PriorityQueue;
-
 
 public class HeapSort
 {
