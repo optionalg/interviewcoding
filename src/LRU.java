@@ -1,6 +1,8 @@
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
-
+/*
 class ListNode<T>
 {
 	private T           value;
@@ -87,10 +89,11 @@ class LinkedList<T>
 		return builder.toString();
 	}
 }
+*/
 
 public class LRU<T>
 {
-	private final HashMap<T, ListNode<T>> map  = new HashMap<T, ListNode<T>>();
+	private final HashMap<T, Iterator<T>> map  = new HashMap<T, Iterator<T>>();
 	private final LinkedList<T>           list = new LinkedList<T>();
 	private final int capacity;
 	
@@ -108,9 +111,9 @@ public class LRU<T>
 	 */
 	public T get()
 	{
-		if(list.getSize() == 0)
+		if(list.size() == 0)
 			return null;
-		return (T) list.getHead().getNext();
+		return list.getFirst();
 	}
 	
 	/**
@@ -118,25 +121,24 @@ public class LRU<T>
 	 */
 	public void put(T value)
 	{
-		ListNode<T> node = map.get(value);
+		Iterator<T> node = map.get(value);
 		if(node != null)
 		{
 			list.remove(node);
 			map.remove(value);
 		}
-		node = new ListNode<T>(value);
-		list.insert(list.getHead(), node);
+		list.addFirst(value);
 		map.put(value, node);
 		enforceCapacity();
 	}
 	
 	private void enforceCapacity()
 	{
-		if(list.getSize() > capacity)
+		if(list.size() > capacity)
 		{
-			ListNode<T> tail = list.getTail();
-			list.remove(tail);
-			map.remove(tail.getValue());
+			T lastValue = list.getLast();
+			list.removeLast();
+			map.remove(lastValue);
 		}
 	}
 	
