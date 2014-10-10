@@ -1,49 +1,80 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
+class QueueEntry
+{
+    QueueEntry(String word, QueueEntry parent)
+    {
+        this.word   = word;
+        this.parent = parent;
+    }
+    
+    ArrayList<String> print()
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        QueueEntry entry = this;
+        while(entry != null)
+        {
+            result.add(entry.word);
+            entry = entry.parent;
+        }
+        Collections.reverse(result);
+        return result;
+    }
+    
+    String      word;
+    QueueEntry  parent;  
+}
 
 public class WordLadder
 {
 
-	public static ArrayList<ArrayList<String>> wordLadder(String start, String end, 
-														  HashSet<String> dict)
+	public static ArrayList<String> wordLadder(String start, String end, 
+											   HashSet<String> dict)
 	{
-		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(); 
 		if(start == null || start.isEmpty() || end == null || end.isEmpty())
-			return result;
+			return null;
+
+		Queue<QueueEntry> queue = new LinkedList<QueueEntry>();
+	    QueueEntry root = new QueueEntry(start, null);
+        queue.add(root);
+	    
+	    while(!queue.isEmpty())
+	    {
+	        QueueEntry node = queue.poll();
+	        if(node.word.equals(end))
+	            return node.print();
+	        
+	        start = node.word;
+	        for(int i = 0; i < start.length(); ++i)
+	        {
+	            for(char c = 'a'; c <= 'z'; ++c)
+	            {
+	                char[] buffer = start.toCharArray();
+	                if(c != buffer[i])   // not the same as parent
+	                {
+	                    buffer[i] = c;   // generate a child candidate
+	                    
+	                    // found the path
+	                    if(end.equals(new String(buffer)))
+	                        return new QueueEntry(end, node).print();
+	                    
+	                    // get a new child
+	                    if(!dict.contains(new String(buffer)))
+	                        continue;
+	                    
+	                    // add the child to queue
+	                    QueueEntry child = new QueueEntry(new String(buffer), node);
+	                    queue.add(child);
+	                }
+	            }
+	        }
+	    }
 		
-		ArrayList<String> path = new ArrayList<String>();
-		wordLadder(start, end, dict, path, result);
-		return result;
-	}
-	
-	private static void wordLadder(String start, String end,
-								   HashSet<String> dict, ArrayList<String> path,
-								   ArrayList<ArrayList<String>> result)
-	{
-		path.add(start);
-		if(start.equals(end))
-		{
-			result.add(path);
-			path.remove(path.size() - 1);
-			return;
-		}
-		
-		for(int i = 0; i < start.length(); ++i)
-		{
-        		for(char c = 'a'; c <= 'z'; ++c)
-        		{
-        			StringBuffer buffer = new StringBuffer(start);
-        			if(c != buffer.charAt(i))
-        			{
-        				buffer.setCharAt(i, c);
-        				if(!dict.contains(buffer.toString()))
-        					continue;
-        				if(path.size() <= 1 || !path.get(path.size()-2).equals(buffer.toString()))
-        					wordLadder(buffer.toString(), end, dict, path, result);
-        			}
-        		}
-		}
+		return null;
 	}
 	
 	public static void main(String[] args)
