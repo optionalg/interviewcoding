@@ -1,5 +1,6 @@
 package leetcode;
 
+/*
 interface State
 {
     boolean isValid();
@@ -250,6 +251,140 @@ class EDigitState extends AbstractState
         return new EndState();
     }
 }
+*/
+
+enum State
+{
+    ErrorState
+    {
+        @Override
+        public boolean isValid()    { return false; }
+    },
+    EndState,
+    StartState
+    {
+        @Override
+        public State readDigit()    { return DigitState; }
+
+        @Override
+        public State readPlus()     { return PlusState; }
+        
+        @Override
+        public State readMinus()    { return MinusState; }
+        
+        @Override
+        public State readPoint()    { return PointState; }
+        
+        @Override
+        public State readSpace()    { return this; }
+    },
+    PlusState
+    {
+        @Override
+        public State readDigit()    { return DigitState; }
+        
+        @Override
+        public State readPoint()    { return PlusPointState; }
+    },
+    MinusState
+    {
+        @Override
+        public State readDigit()    { return DigitState; }
+        
+        @Override
+        public State readPoint()    { return MinusPointState; }
+    },
+    PlusPointState
+    {
+        @Override
+        public State readDigit()    { return DigitState; }
+    },
+    MinusPointState
+    {
+        @Override
+        public State readDigit()    { return DigitState; }
+    },
+    DigitState
+    {
+        @Override
+        public State readDigit()    { return this; }
+        
+        @Override
+        public State readPoint()    { return DigitPointState; }
+        
+        @Override
+        public State readE()        { return EState; }
+        
+        @Override
+        public State readEnd()      { return EndState; }
+    },
+    DigitPointState
+    {
+        @Override
+        public State readDigit()    { return PointDigitState; }
+        
+        @Override
+        public State readEnd()      { return EndState; }
+        
+        @Override
+        public State readE()        { return EState; }
+    },
+    PointState
+    {
+        @Override
+        public State readDigit()    { return PointDigitState; }
+    },
+    PointDigitState
+    {
+        @Override
+        public State readDigit()    { return this; }
+        
+        @Override
+        public State readEnd()      { return EndState; }
+        
+        @Override
+        public State readE()        { return EState; }
+    },
+    EState
+    {
+        @Override
+        public State readDigit()    { return EDigitState; }
+        
+        @Override
+        public State readPlus()     { return EPlusState; }
+        
+        @Override
+        public State readMinus()    { return EMinusState; }
+    },
+    EPlusState
+    {
+        @Override
+        public State readDigit()    { return EDigitState; }
+    },
+    EMinusState
+    {
+        @Override
+        public State readDigit()    { return EDigitState; }
+    },
+    EDigitState
+    {
+        @Override
+        public State readDigit()    { return this; }
+        
+        @Override
+        public State readEnd()      { return EndState; }
+    };
+    
+    public boolean  isValid()   { return true; }
+    public State    readSpace() { return ErrorState; }
+    public State    readDigit() { return ErrorState; }
+    public State    readPlus()  { return ErrorState; }
+    public State    readMinus() { return ErrorState; }
+    public State    readPoint() { return ErrorState; }
+    public State    readE()     { return ErrorState; }
+    public State    readEnd()   { return ErrorState; }
+}
+
 
 public class ValidNumber
 {
@@ -267,7 +402,7 @@ public class ValidNumber
     public static boolean isNumber(String s)
     {
         s = s.trim();  // remove leading and trailing spaces
-        State state = new StartState();
+        State state = State.StartState;
         for(char c: s.toCharArray())
         {
             // some chars are not acceptable by any state
@@ -291,25 +426,25 @@ public class ValidNumber
                 return false;
         }
         state = state.readEnd();
-        return state instanceof EndState;
+        return state == State.EndState;
     }
 
     public static void main(String[] args)
     {
-//        System.out.println(isNumber("0"));
-//        System.out.println(isNumber("00"));
-//        System.out.println(isNumber("-0"));
-//        System.out.println(isNumber("0.0"));
-//        System.out.println(isNumber(".0"));
-//        System.out.println(isNumber("0."));
-//        System.out.println(isNumber("0.1"));
-//        System.out.println(isNumber(" 0.1"));
-//        System.out.println(isNumber("0.1 "));
-//        System.out.println(isNumber("0 .1"));
-//        System.out.println(isNumber("0. 1"));
-//        System.out.println(isNumber("0 1"));
-//        System.out.println(isNumber("+.8"));
-//        System.out.println(isNumber("6+1"));
+        System.out.println(isNumber("0"));
+        System.out.println(isNumber("00"));
+        System.out.println(isNumber("-0"));
+        System.out.println(isNumber("0.0"));
+        System.out.println(isNumber(".0"));
+        System.out.println(isNumber("0."));
+        System.out.println(isNumber("0.1"));
+        System.out.println(isNumber(" 0.1"));
+        System.out.println(isNumber("0.1 "));
+        System.out.println(isNumber("0 .1"));
+        System.out.println(isNumber("0. 1"));
+        System.out.println(isNumber("0 1"));
+        System.out.println(isNumber("+.8"));
+        System.out.println(isNumber("6+1"));
         
 //        System.out.println(isNumber(" 12"));
 //        System.out.println(isNumber("12 "));
