@@ -47,7 +47,7 @@ public class KMP
 	
 	public static void main(String[] args)
 	{
-		String base = new String("abcabcabdc");
+		String base    = new String("abcabcabdc");
 		String pattern = new String("abcabd");
 		System.out.println(match(base, pattern, 0));
 	}
