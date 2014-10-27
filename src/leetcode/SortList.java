@@ -1,17 +1,5 @@
 package leetcode;
 
-class ListNode
-{
-	public int      val;
-	public ListNode next;
-
-	ListNode(int x)
-	{
-		val  = x;
-		next = null;
-	}
-}
-
 public class SortList
 {
 	public static ListNode sortList(ListNode head)
