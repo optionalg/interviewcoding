@@ -76,16 +76,16 @@ public class CloneGraph
 
     public static void main(String[] args)
     {
-        UndirectedGraphNode node0 = new UndirectedGraphNode(0);
+        UndirectedGraphNode node0 = new UndirectedGraphNode(-1);
         UndirectedGraphNode node1 = new UndirectedGraphNode(1);
-        UndirectedGraphNode node2 = new UndirectedGraphNode(2);
+//        UndirectedGraphNode node2 = new UndirectedGraphNode(2);
         node0.neighbors.add(node1);
-        node0.neighbors.add(node2);
+//        node0.neighbors.add(node2);
         node1.neighbors.add(node0);
-        node1.neighbors.add(node2);
-        node2.neighbors.add(node0);
-        node2.neighbors.add(node1);
-        node2.neighbors.add(node2);
+//        node1.neighbors.add(node2);
+//        node2.neighbors.add(node0);
+//        node2.neighbors.add(node1);
+//        node2.neighbors.add(node2);
         UndirectedGraphNode clone = cloneGraph(node0);
     }
 
