@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RestoreIPAddresses
 {
 
@@ -16,18 +19,20 @@ public class RestoreIPAddresses
     
     private void restore(String s, int start, List<String> sections, List<String> result)
     {
-        if(start > s.length() - 1 && sections.size() == 4)
+        if(sections.size() == 4)
         {
-            result.add(String.join(".", sections);
+        		if(start < s.length() - 1)
+        			return;
+            result.add(String.join(".", sections));
             return;
         }
         
-        for(int len = 1; len <= 4 && start + len < s.length(); ++len)
+        for(int len = 1; len <= 3 && start + len < s.length(); ++len)
         {
             String section = s.substring(start, start + len);
             if(isValidSection(section))
             { 
-                List<String> temp = new List<String>();
+                List<String> temp = new ArrayList<String>();
                 temp.addAll(sections);
                 temp.add(section);
                 restore(s, start + len, temp, result);
