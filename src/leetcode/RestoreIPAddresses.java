@@ -21,16 +21,18 @@ public class RestoreIPAddresses
     {
         if(sections.size() == 4)
         {
-        		if(start < s.length() - 1)
-        			return;
-            result.add(String.join(".", sections));
+        	if(start == s.length())
+        		result.add(sections.get(0) + "." + 
+        				   sections.get(1) + "." + 
+        				   sections.get(2) + "." + 
+        				   sections.get(3));
             return;
         }
         
-        for(int len = 1; len <= 3 && start + len < s.length(); ++len)
+        for(int len = 1; len <= 3 && start + len <= s.length(); ++len)
         {
             String section = s.substring(start, start + len);
-            if(isValidSection(section))
+            if(isValidSection(section, sections.size() - 1))
             { 
                 List<String> temp = new ArrayList<String>();
                 temp.addAll(sections);
@@ -40,16 +42,23 @@ public class RestoreIPAddresses
         }
     }
     
-    private boolean isValidSection(String section)
+    private boolean isValidSection(String section, int index)
     {
         int value = Integer.valueOf(section);
-        return 0 <= value && value <= 255;
+        if(value < 0 || value > 255)
+        	return false;
+        if(section.length() > 1 && section.charAt(0) == '0')
+        	return false;
+        return true;
     }
     
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
-
+		RestoreIPAddresses a = new RestoreIPAddresses();
+		System.out.println(a.restoreIpAddresses("98765"));
+		System.out.println(a.restoreIpAddresses("25525522235"));
+		System.out.println(a.restoreIpAddresses("0000"));
+		System.out.println(a.restoreIpAddresses("010010"));
 	}
 
 }
