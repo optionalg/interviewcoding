@@ -13,7 +13,7 @@ public class RestoreIPAddresses
     public List<String> restoreIpAddresses(String s)
     {
         List<String> result = new ArrayList<String>();
-        if(s == null || s.isEmpty() || s.length() < 4)
+        if(s == null || s.isEmpty() || s.length() < 4 || s.length() > 12)
             return result;
             
         List<String> sections = new ArrayList<String>();
