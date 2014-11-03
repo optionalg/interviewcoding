@@ -1,6 +1,13 @@
 
 public class ThreeSingleNumbers
 {
+    /**
+     * All the numbers in the array appear twice, except for 3 numbers
+     * Find one of the single numbers
+     * 
+     * @param array
+     * @return
+     */
 	public static int findSingleNumber(int[] array)
 	{
 		int count = 0;  // # of 1 in current bit
@@ -52,7 +59,7 @@ public class ThreeSingleNumbers
 	
 	public static void main(String[] args)
 	{
-		System.out.println(findSingleNumber(new int[] {1,1,2,2,3,3,4,4,5,9,7}));
+		System.out.println(findSingleNumber(new int[] {1,1,2,2,3,3,4,4,5,7,8}));
 	}
 
 }
