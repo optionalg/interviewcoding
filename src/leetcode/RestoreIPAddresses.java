@@ -26,20 +26,20 @@ public class RestoreIPAddresses
      * @param s			the string
      * @param start		start index
      * @param sections	temp for currently collected sections
-     * @param result		result
+     * @param result	result
      */
     private void restore(String s, int start, List<String> sections, List<String> result)
     {
-    		// have collected 4 sections
+    	// have collected 4 sections
         if(sections.size() == 4)
         {
-        		// and the input string is exhausted, add the sections as a result
-        		if(start == s.length())
-        			result.add(sections.get(0) + "." + 
-        					   sections.get(1) + "." + 
-        					   sections.get(2) + "." + 
-        					   sections.get(3));
-        		// otherwise just return
+        	// and the input string is exhausted, add the sections as a result
+        	if(start == s.length())
+        		result.add(sections.get(0) + "." + 
+        				   sections.get(1) + "." + 
+        				   sections.get(2) + "." + 
+        				   sections.get(3));
+        	// otherwise just return
             return;
         }
         

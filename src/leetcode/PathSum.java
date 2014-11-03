@@ -17,7 +17,7 @@ class TreeNode
 }
  
 
-// Add extro info to TreeNode: parent and length of path
+// Add extra info to TreeNode: parent and length of path
 class Node
 {
     public TreeNode treeNode;
