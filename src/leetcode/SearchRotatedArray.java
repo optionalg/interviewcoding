@@ -3,54 +3,39 @@ package leetcode;
 public class SearchRotatedArray
 {
 
-	private static boolean isStart(int[] array, int i)
-	{
-		return i > 0 && array[i] < array[i-1];
-	}
+	public static int search(int[] array, int target) {
+	    return search(array, 0, array.length-1, target);
+    }
 	
-	private static int findStart(int[] array, int left, int right)
+	private static int search(int[] array, int left, int right, int target)
 	{
-		if(right < left)
-			return 0;
-		
-		int mid = (left + right) / 2;
-		if(isStart(array, mid))
-			return mid;
-		
-		if(array[mid] > array[left])
-			return findStart(array, mid+1, right);
-		else
-			return findStart(array, left, mid-1);
-	}
-	
-	private static int binarySearch(int[] array, int target, int left, int right)
-	{
-		while(left <= right)
-		{
-			int mid = (left + right) / 2;
-			if(array[mid] == target)
-				return mid;
-			if(target < array[mid])
-				right = mid - 1;
-			else
-				left = mid + 1;
-		}
-		return -1;
-	}
-	
-	public static int search(int[] array, int target)
-	{
-		int start = findStart(array, 0, array.length - 1);
-		
-		if(array[start] <= target && target <= array[array.length - 1])
-			return binarySearch(array, target, start, array.length - 1);
-		else
-			return binarySearch(array, target, 0, start - 1);
+	    if(left > right)
+	        return -1;
+	    
+	    int mid = (left + right) / 2;
+	    if(array[mid] == target)
+	        return mid;
+	    
+	    // target is smaller, start is on the left, target smaller than A[left]
+	    // go left if
+	    // 111
+	    // 110
+	    // 100
+	    // 010
+	    boolean targetSmaller         = target < array[mid];
+	    boolean startLeft             = array[left] > array[mid];
+	    boolean targetSmallerThanLeft = target < array[left];
+	    boolean goLeft = targetSmaller  && startLeft ||
+	                     targetSmaller  && !startLeft && !targetSmallerThanLeft ||
+	                     !targetSmaller && startLeft  && !targetSmallerThanLeft;
+	    
+	    return goLeft ? search(array, left,    mid - 1, target)
+	                  : search(array, mid + 1, right,   target); 
 	}
 	
 	public static void main(String[] args)
 	{
-		int result = search(new int[] {7,8,1,2,3,4,5,6}, 9);
+		int result = search(new int[] {7,8,1,2,3,4,5,6}, 0);
 		System.out.println(result);
 	}
 
