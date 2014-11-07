@@ -16,26 +16,25 @@ public class SearchRotatedArray
 	    if(array[mid] == target)
 	        return mid;
 	    
-	    // target is smaller, start is on the left, target smaller than A[left]
-	    // go left if
-	    // 111
-	    // 110
-	    // 100
-	    // 010
-	    boolean targetSmaller         = target < array[mid];
-	    boolean startLeft             = array[left] > array[mid];
-	    boolean targetSmallerThanLeft = target < array[left];
-	    boolean goLeft = targetSmaller  && startLeft ||
-	                     targetSmaller  && !startLeft && !targetSmallerThanLeft ||
-	                     !targetSmaller && startLeft  && !targetSmallerThanLeft;
-	    
-	    return goLeft ? search(array, left,    mid - 1, target)
-	                  : search(array, mid + 1, right,   target); 
+	    if(array[left] <= array[mid])  // left is sorted
+	    {
+	        if(array[left] <= target && target <= array[mid])
+	            return search(array, left, mid-1, target);
+	        else
+	            return search(array, mid+1, right, target);
+	    }
+	    else
+	    {
+	        if(array[mid] <= target && target <= array[right])
+	            return search(array, mid + 1, right, target);
+	        else
+	            return search(array, left, mid-1, target);
+	    }
 	}
 	
 	public static void main(String[] args)
 	{
-		int result = search(new int[] {7,8,1,2,3,4,5,6}, 0);
+		int result = search(new int[] {1,3,1,1,1,1}, 3);
 		System.out.println(result);
 	}
 

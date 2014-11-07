@@ -1,14 +1,6 @@
-class Cell
-{
-	public int row;
-	public int col;
-	
-	public Cell(int r, int c)
-	{
-		row = r;
-		col = c;
-	}
-}
+import leetcode.Cell;
+
+
 
 public class SortedMatrix
 {
