@@ -4,23 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-class Cell
-{
-    public int row;
-    public int col;
-    
-    public Cell(int r, int c)
-    {
-        row = r;
-        col = c;
-    }
-    
-    @Override
-    public String toString() {
-        return "" + row + "," + col;
-    }
-}
-
 public class SurroundedRegions
 {
 

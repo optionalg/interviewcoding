@@ -39,7 +39,7 @@ public class Permutation
 	
 	public static void main(String[] args)
 	{
-		System.out.println(permutation("ABC"));
+		System.out.println(permutation("1234"));
 	}
 
 }
