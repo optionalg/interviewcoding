@@ -24,6 +24,11 @@ public class Bits
 	 */
 	public static int divide(int numerator, int denominator)
 	{
+	    if(denominator < 0)
+	        denominator = -denominator;
+	    if(numerator < 0)
+	        numerator = -numerator;
+
 		int current  = 1;   // current bit
 		int quotient = 0;
 
@@ -52,16 +57,17 @@ public class Bits
 	        current     >>= 1;
 			denominator	>>= 1;
 	    }    
-	    return quotient;
+	    return (numerator > 0 && denominator > 0 || numerator < 0 && denominator < 0) ?
+	            quotient : -quotient;
 	}
 	
 	public static void main(String[] argv)
 	{
-		int i = -1;
-		System.out.println(Integer.toBinaryString(i));
-		System.out.println(Integer.toBinaryString(i >>> 5));
-		System.out.println(Integer.toBinaryString(i >> 5));
-		System.out.println(divide(15, 3));
-		System.out.println(setBits(0x400, 0x15, 2, 4));
+//		int i = -1;
+//		System.out.println(Integer.toBinaryString(i));
+//		System.out.println(Integer.toBinaryString(i >>> 5));
+//		System.out.println(Integer.toBinaryString(i >> 5));
+		System.out.println(divide(1, -1));
+//		System.out.println(setBits(0x400, 0x15, 2, 4));
 	}
 }
