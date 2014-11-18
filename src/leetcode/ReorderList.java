@@ -2,6 +2,8 @@ package leetcode;
 
 import java.util.ArrayList;
 
+import leetcode.list.ListNode;
+
 public class ReorderList
 {
 

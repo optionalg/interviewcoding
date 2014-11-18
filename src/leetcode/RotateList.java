@@ -3,6 +3,8 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+import leetcode.list.ListNode;
+
 public class RotateList
 {
     public ListNode rotateRight(ListNode head, int n)

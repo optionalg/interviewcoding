@@ -6,6 +6,9 @@ import java.util.List;
 public class PalindromePartitioning
 {
 
+	/**
+	 * Get all possible partitions of a given string that all sections are palindrome
+	 */
     public static List<List<String>> partition(String s)
     {
         List<List<String>> result = new ArrayList<List<String>>();
@@ -17,7 +20,7 @@ public class PalindromePartitioning
     }
 
     private static void partition(String s, List<String> t,
-            List<List<String>> result)
+            						  List<List<String>> result)
     {
         if(s.isEmpty())
         {
@@ -47,10 +50,10 @@ public class PalindromePartitioning
 
     private static boolean isPalindrome(String str)
     {
-        int i = 0;
-        int j = str.length() - 1;
-        while(i < j)
-            if(str.charAt(i++) != str.charAt(j--))
+        int left  = 0;
+        int right = str.length() - 1;
+        while(left < right)
+            if(str.charAt(left++) != str.charAt(right--))
                 return false;
         return true;
     }
