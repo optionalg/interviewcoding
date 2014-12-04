@@ -1,5 +1,7 @@
 package leetcode;
 
+import leetcode.tree.TreeNode;
+
 public class SortedArrayToBST
 {
 

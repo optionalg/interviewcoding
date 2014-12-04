@@ -3,6 +3,8 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+import leetcode.tree.TreeNode;
+
 /**
  * Given n, how many structurally unique BSTs that store values 1...n?
  */

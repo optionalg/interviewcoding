@@ -3,6 +3,8 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+import leetcode.tree.TreeNode;
+
 /**
  * Check whether a BST is valid
  */

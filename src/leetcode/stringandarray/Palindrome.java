@@ -11,7 +11,7 @@ public class Palindrome
         int right = s.length() - 1;
         while(left < right)
         {
-        		// skip invalid chars
+        	// skip invalid chars
             char c1 = s.charAt(left);
             while(left < right && !valid(c1))
                 c1 = s.charAt(++left);

@@ -5,17 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-class TreeNode
-{
-    int      val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}
- 
+import leetcode.tree.TreeNode;
 
 // Add extra info to TreeNode: parent and length of path
 class Node
